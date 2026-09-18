@@ -6,10 +6,18 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strconv"
 )
 
-const url = "https://pokeapi.co/api/v2/location-area/"
+type result struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
+}
+
+var locationArea struct {
+	Next    string   `json:"next"`
+	Prev    string   `json:"previous"`
+	Results []result `json:"results"`
+}
 
 func commandExit(conf *Config) error {
 	fmt.Print("Closing the Pokedex... Goodbye!")
@@ -27,51 +35,45 @@ func commandHelp(conf *Config) error {
 }
 
 func commandMap(conf *Config) error {
-	var location struct {
-		Name string `json:"name"`
+	if conf.NextMap == "null" {
+		fmt.Println("No More Location Areas")
+		return nil
 	}
-
-	position, err := strconv.Atoi(conf.NextMap)
+	req, err := http.Get(conf.NextMap)
 	if err != nil {
 		return err
 	}
-	for i := position - 20; i < position; i++ {
-		res, err := http.Get(fmt.Sprintf("%s%d", url, i))
-		if err != nil {
-			return err
-		}
-		defer func() { _ = res.Body.Close() }()
-		if err := json.NewDecoder(res.Body).Decode(&location); err != nil {
-			return err
-		}
-		fmt.Println(location.Name)
+	defer func() { _ = req.Body.Close() }()
+	if err := json.NewDecoder(req.Body).Decode(&locationArea); err != nil {
+		return err
 	}
-	conf.PrevMap = conf.NextMap
-	conf.NextMap = fmt.Sprintf("%d", position+20)
+	conf.NextMap = locationArea.Next
+	conf.PrevMap = locationArea.Prev
+	results := locationArea.Results
+	for _, val := range results {
+		fmt.Println(val.Name)
+	}
 	return nil
 }
 
 func commandMapb(conf *Config) error {
-	var location struct {
-		Name string `json:"name"`
+	if conf.NextMap == "null" {
+		fmt.Println("There is No Previous Location Areas")
+		return nil
 	}
-
-	position, err := strconv.Atoi(conf.PrevMap)
+	req, err := http.Get(conf.PrevMap)
 	if err != nil {
 		return err
 	}
-	for i := position - 20; i < position; i++ {
-		res, err := http.Get(fmt.Sprintf("%s%d", url, i))
-		if err != nil {
-			return err
-		}
-		defer func() { _ = res.Body.Close() }()
-		if err := json.NewDecoder(res.Body).Decode(&location); err != nil {
-			return err
-		}
-		fmt.Println(location.Name)
+	defer func() { _ = req.Body.Close() }()
+	if err := json.NewDecoder(req.Body).Decode(&locationArea); err != nil {
+		return err
 	}
-	conf.NextMap = conf.PrevMap
-	conf.PrevMap = fmt.Sprintf("%d", position-20)
+	conf.NextMap = locationArea.Next
+	conf.PrevMap = locationArea.Prev
+	results := locationArea.Results
+	for _, val := range results {
+		fmt.Println(val.Name)
+	}
 	return nil
 }

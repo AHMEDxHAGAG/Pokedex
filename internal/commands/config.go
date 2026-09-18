@@ -8,5 +8,5 @@ type Config struct {
 }
 
 func NewConfig() *Config {
-	return &Config{Reg: getRegistry(), NextMap: "21", PrevMap: "1"}
+	return &Config{Reg: getRegistry(), NextMap: "https://pokeapi.co/api/v2/location-area/", PrevMap: "null"}
 }
