@@ -12,8 +12,6 @@ func cleanInput(text string) []string {
 			continue
 		}
 		newSlice = append(newSlice, val)
-
 	}
-
 	return newSlice
 }
