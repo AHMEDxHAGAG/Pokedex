@@ -2,9 +2,11 @@
 package commands
 
 type Config struct {
-	Reg registry
+	Reg     registry
+	NextMap string
+	PrevMap string
 }
 
 func NewConfig() *Config {
-	return &Config{Reg: getRegistery()}
+	return &Config{Reg: getRegistry(), NextMap: "21", PrevMap: "1"}
 }

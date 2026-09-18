@@ -8,7 +8,7 @@ type cliCommand struct {
 	Callback    func(*Config) error
 }
 
-func getRegistery() registry {
+func getRegistry() registry {
 	return registry{
 		"exit": {
 			Name:        "exit",
@@ -19,6 +19,16 @@ func getRegistery() registry {
 			Name:        "help",
 			Description: "Displays a help message",
 			Callback:    commandHelp,
+		},
+		"map": {
+			Name:        "map",
+			Description: "Displays the names of the next 20 location areas in the Pokemon world",
+			Callback:    commandMap,
+		},
+		"mapb": {
+			Name:        "mapb",
+			Description: "Displays the names of the previous 20 location areas in the Pokemon world",
+			Callback:    commandMapb,
 		},
 	}
 }
