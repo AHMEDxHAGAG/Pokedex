@@ -10,19 +10,19 @@ import (
 	"github.com/AHMEDxHAGAG/Pokedex/internal/commands"
 )
 
-func StartREPL() {
+func StartREPL(conf *commands.Config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
 		scanner.Scan()
 		input := scanner.Text()
 		inputCleaned := cleanInput(input)
-		val, ok := commands.Commands[inputCleaned[0]]
+		val, ok := conf.Reg[inputCleaned[0]]
 		if !ok {
 			fmt.Println("Unknown command")
 			continue
 		}
-		if err := val.Callback(); err != nil {
+		if err := val.Callback(conf); err != nil {
 			fmt.Println(err)
 			continue
 		}

@@ -1,7 +1,11 @@
 package main
 
-import repl "github.com/AHMEDxHAGAG/Pokedex/internal/REPL"
+import (
+	"github.com/AHMEDxHAGAG/Pokedex/internal/commands"
+	"github.com/AHMEDxHAGAG/Pokedex/internal/repl"
+)
 
 func main() {
-	repl.StartREPL()
+	conf := commands.NewConfig()
+	repl.StartREPL(conf)
 }
