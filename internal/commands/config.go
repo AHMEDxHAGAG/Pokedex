@@ -2,6 +2,8 @@
 package commands
 
 import (
+	"time"
+
 	"github.com/AHMEDxHAGAG/Pokedex/internal/pokecache"
 )
 
@@ -15,8 +17,8 @@ type Config struct {
 func NewConfig() *Config {
 	return &Config{
 		Reg:     getRegistry(),
-		NextMap: "https://pokeapi.co/api/v2/location-area/",
+		NextMap: "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20",
 		PrevMap: "null",
-		Cache:   pokecache.NewCache(5),
+		Cache:   pokecache.NewCache(10 * time.Minute),
 	}
 }

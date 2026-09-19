@@ -35,8 +35,7 @@ func commandMap(conf *Config) error {
 		return nil
 	}
 	val, found := conf.Cache.Get(conf.NextMap)
-	if found {
-	} else {
+	if !found {
 		req, err := http.Get(conf.NextMap)
 		if err != nil {
 			return err
@@ -46,12 +45,13 @@ func commandMap(conf *Config) error {
 		if err != nil {
 			return err
 		}
+		conf.Cache.Add(conf.NextMap, val)
 	}
 	if err := json.Unmarshal(val, &locationArea); err != nil {
 		return err
 	}
+	conf.PrevMap = conf.NextMap
 	conf.NextMap = locationArea.Next
-	conf.PrevMap = locationArea.Prev
 	results := locationArea.Results
 	for _, val := range results {
 		fmt.Println(val.Name)
@@ -60,13 +60,12 @@ func commandMap(conf *Config) error {
 }
 
 func commandMapb(conf *Config) error {
-	if conf.NextMap == "null" {
+	if conf.PrevMap == "null" {
 		fmt.Println("There is No Previous Location Areas")
 		return nil
 	}
 	val, found := conf.Cache.Get(conf.PrevMap)
-	if found {
-	} else {
+	if !found {
 		req, err := http.Get(conf.PrevMap)
 		if err != nil {
 			return err
@@ -76,11 +75,12 @@ func commandMapb(conf *Config) error {
 		if err != nil {
 			return err
 		}
+		conf.Cache.Add(conf.PrevMap, val)
 	}
 	if err := json.Unmarshal(val, &locationArea); err != nil {
 		return err
 	}
-	conf.NextMap = locationArea.Next
+	conf.NextMap = conf.PrevMap
 	conf.PrevMap = locationArea.Prev
 	results := locationArea.Results
 	for _, val := range results {

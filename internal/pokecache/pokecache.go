@@ -17,7 +17,7 @@ type cacheEntry struct {
 }
 
 func NewCache(interval time.Duration) *Cache {
-	cache := &Cache{}
+	cache := &Cache{C: make(map[string]cacheEntry)}
 	go cache.ReadLoop(interval)
 	return cache
 }
