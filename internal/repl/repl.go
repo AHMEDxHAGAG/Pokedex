@@ -17,6 +17,10 @@ func StartREPL(conf *commands.Config) {
 		scanner.Scan()
 		input := scanner.Text()
 		inputCleaned := cleanInput(input)
+		if len(inputCleaned) == 0 {
+			fmt.Println("Empty Command isn't Allowed")
+			continue
+		}
 		val, ok := conf.Reg[inputCleaned[0]]
 		if !ok {
 			fmt.Println("Unknown command")

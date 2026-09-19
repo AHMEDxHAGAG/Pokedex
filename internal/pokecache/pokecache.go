@@ -41,13 +41,17 @@ func (cache *Cache) Add(key string, val []byte) {
 func (cache *Cache) ReadLoop(interval time.Duration) {
 	ticker := time.NewTicker(interval)
 	for range ticker.C {
-		cache.mu.Lock()
-		for key, value := range cache.c {
-			res := time.Now().Compare(value.createdAt.Add(interval))
-			if res == 0 || res == 1 {
-				delete(cache.c, key)
-			}
-		}
-		cache.mu.Unlock()
+		cache.update(interval)
 	}
+}
+
+func (cache *Cache) update(interval time.Duration) {
+	cache.mu.Lock()
+	for key, value := range cache.c {
+		res := time.Now().Compare(value.createdAt.Add(interval))
+		if res == 0 || res == 1 {
+			delete(cache.c, key)
+		}
+	}
+	cache.mu.Unlock()
 }
