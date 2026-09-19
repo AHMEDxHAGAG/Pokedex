@@ -17,7 +17,7 @@ var locationArea struct {
 	Results []result `json:"results"`
 }
 
-func commandMap(conf *Config) error {
+func commandMap(conf *Config, parameters []string) error {
 	if conf.NextMap == "" {
 		fmt.Println("No More Location Areas")
 		return nil
@@ -42,7 +42,7 @@ func commandMap(conf *Config) error {
 	return nil
 }
 
-func commandMapb(conf *Config) error {
+func commandMapb(conf *Config, parameters []string) error {
 	if conf.PrevMap == "" {
 		fmt.Println("There is No Previous Location Areas")
 		return nil

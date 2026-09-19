@@ -6,13 +6,13 @@ import (
 	"os"
 )
 
-func commandExit(conf *Config) error {
+func commandExit(conf *Config, parameters []string) error {
 	fmt.Print("Closing the Pokedex... Goodbye!")
 	os.Exit(0)
 	return nil
 }
 
-func commandHelp(conf *Config) error {
+func commandHelp(conf *Config, parameters []string) error {
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	for _, value := range conf.Reg {

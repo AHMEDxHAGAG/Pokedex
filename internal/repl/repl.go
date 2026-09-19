@@ -26,7 +26,7 @@ func StartREPL(conf *commands.Config) {
 			fmt.Println("Unknown command")
 			continue
 		}
-		if err := val.Callback(conf); err != nil {
+		if err := val.Callback(conf, inputCleaned); err != nil {
 			fmt.Println(err)
 			continue
 		}

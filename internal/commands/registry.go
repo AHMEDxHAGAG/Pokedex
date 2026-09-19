@@ -5,7 +5,7 @@ type Registry map[string]cliCommand
 type cliCommand struct {
 	Name        string
 	Description string
-	Callback    func(*Config) error
+	Callback    func(*Config, []string) error
 }
 
 func GetRegistry() Registry {
@@ -32,12 +32,12 @@ func GetRegistry() Registry {
 		},
 		"explore": {
 			Name:        "explore",
-			Description: "Displays the names of the next 20 location areas in the Pokemon world",
+			Description: "List all Pokemons located in area : explore <location area>",
 			Callback:    commandExplore,
 		},
 		"catch": {
 			Name:        "catch",
-			Description: "Displays the names of the previous 20 location areas in the Pokemon world",
+			Description: "Catch Pokemon and add it to the Pokedex : catch <pokemon name>",
 			Callback:    commandCatch,
 		},
 	}
