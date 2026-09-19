@@ -8,7 +8,7 @@ import (
 
 type Cache struct {
 	c        map[string]cacheEntry
-	mu       sync.RWMutex
+	mu       sync.Mutex
 	interval time.Duration
 }
 
@@ -27,11 +27,12 @@ func NewCache(interval time.Duration) *Cache {
 }
 
 func (cache *Cache) Get(key string) (val []byte, found bool) {
-	cache.mu.RLock()
-	defer cache.mu.RUnlock()
+	cache.mu.Lock()
+	defer cache.mu.Unlock()
 	entry, found := cache.c[key]
 	if found {
-		if val := time.Now().Compare(entry.createdAt.Add(cache.interval)); val == 1 || val == 0 {
+		if ok := time.Now().Compare(entry.createdAt.Add(cache.interval)); ok == 1 || ok == 0 {
+			delete(cache.c, key)
 			return nil, false
 		}
 	}
