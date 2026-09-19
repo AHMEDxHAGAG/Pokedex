@@ -11,10 +11,10 @@ var location struct {
 }
 
 type pokemonEncounters struct {
-	Pokemon pokemon `json:"pokemon"`
+	Pokemon Pokemon `json:"pokemon"`
 }
 
-type pokemon struct {
+type Pokemon struct {
 	Name           string `json:"name"`
 	BaseExperience int    `json:"base_experience"`
 }
@@ -53,7 +53,7 @@ func commandCatch(conf *Config, parameters []string) error {
 	if err != nil {
 		return err
 	}
-	var pokemonInstance pokemon
+	var pokemonInstance Pokemon
 	if err := json.Unmarshal(val, &pokemonInstance); err != nil {
 		return err
 	}
@@ -61,6 +61,7 @@ func commandCatch(conf *Config, parameters []string) error {
 	caught := userChance >= pokemonInstance.BaseExperience
 	if caught {
 		fmt.Println(pokeName + " was caught!")
+		conf.Pokedex[pokeName] = pokemonInstance
 	} else {
 		fmt.Println(pokeName + " escaped!")
 	}
