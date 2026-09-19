@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
 )
 
 type result struct {
@@ -17,21 +16,6 @@ var locationArea struct {
 	Next    string   `json:"next"`
 	Prev    string   `json:"previous"`
 	Results []result `json:"results"`
-}
-
-func commandExit(conf *Config) error {
-	fmt.Print("Closing the Pokedex... Goodbye!")
-	os.Exit(0)
-	return nil
-}
-
-func commandHelp(conf *Config) error {
-	fmt.Println("Welcome to the Pokedex!")
-	fmt.Println("Usage:")
-	for _, value := range conf.Reg {
-		fmt.Printf("%s: %s\n", value.Name, value.Description)
-	}
-	return nil
 }
 
 func commandMap(conf *Config) error {
