@@ -18,7 +18,7 @@ func NewConfig() *Config {
 	return &Config{
 		Reg:     getRegistry(),
 		NextMap: "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20",
-		PrevMap: "null",
+		PrevMap: "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20",
 		Cache:   pokecache.NewCache(10 * time.Minute),
 	}
 }

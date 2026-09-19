@@ -30,7 +30,7 @@ var locationArea struct {
 */
 
 func commandMap(conf *Config) error {
-	if conf.NextMap == "null" {
+	if conf.NextMap == "" {
 		fmt.Println("No More Location Areas")
 		return nil
 	}
@@ -50,7 +50,7 @@ func commandMap(conf *Config) error {
 	if err := json.Unmarshal(val, &locationArea); err != nil {
 		return err
 	}
-	conf.PrevMap = conf.NextMap
+	conf.PrevMap = locationArea.Prev
 	conf.NextMap = locationArea.Next
 	results := locationArea.Results
 	for _, val := range results {
@@ -60,7 +60,7 @@ func commandMap(conf *Config) error {
 }
 
 func commandMapb(conf *Config) error {
-	if conf.PrevMap == "null" {
+	if conf.PrevMap == "" {
 		fmt.Println("There is No Previous Location Areas")
 		return nil
 	}
@@ -80,8 +80,8 @@ func commandMapb(conf *Config) error {
 	if err := json.Unmarshal(val, &locationArea); err != nil {
 		return err
 	}
-	conf.NextMap = conf.PrevMap
 	conf.PrevMap = locationArea.Prev
+	conf.NextMap = locationArea.Next
 	results := locationArea.Results
 	for _, val := range results {
 		fmt.Println(val.Name)
