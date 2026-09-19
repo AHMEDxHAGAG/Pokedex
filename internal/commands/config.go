@@ -1,4 +1,3 @@
-// Package commands
 package commands
 
 import (
@@ -8,7 +7,7 @@ import (
 )
 
 type Config struct {
-	Reg     registry
+	Reg     Registry
 	NextMap string
 	PrevMap string
 	Cache   *pokecache.Cache
@@ -16,7 +15,7 @@ type Config struct {
 
 func NewConfig() *Config {
 	return &Config{
-		Reg:     getRegistry(),
+		Reg:     GetRegistry(),
 		NextMap: "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20",
 		PrevMap: "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20",
 		Cache:   pokecache.NewCache(10 * time.Minute),

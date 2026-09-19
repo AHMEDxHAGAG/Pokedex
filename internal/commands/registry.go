@@ -1,6 +1,6 @@
 package commands
 
-type registry map[string]cliCommand
+type Registry map[string]cliCommand
 
 type cliCommand struct {
 	Name        string
@@ -8,8 +8,8 @@ type cliCommand struct {
 	Callback    func(*Config) error
 }
 
-func getRegistry() registry {
-	return registry{
+func GetRegistry() Registry {
+	return Registry{
 		"exit": {
 			Name:        "exit",
 			Description: "Exit the Pokedex",
