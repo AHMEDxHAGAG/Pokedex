@@ -30,5 +30,15 @@ func GetRegistry() Registry {
 			Description: "Displays the names of the previous 20 location areas in the Pokemon world",
 			Callback:    commandMapb,
 		},
+		"explore": {
+			Name:        "explore",
+			Description: "Displays the names of the next 20 location areas in the Pokemon world",
+			Callback:    commandExplore,
+		},
+		"catch": {
+			Name:        "catch",
+			Description: "Displays the names of the previous 20 location areas in the Pokemon world",
+			Callback:    commandCatch,
+		},
 	}
 }
