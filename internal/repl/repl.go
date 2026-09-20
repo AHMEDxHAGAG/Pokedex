@@ -28,7 +28,6 @@ func StartREPL(conf *commands.Config) {
 		}
 		if err := val.Callback(conf, inputCleaned); err != nil {
 			fmt.Println(err)
-			continue
 		}
 	}
 }

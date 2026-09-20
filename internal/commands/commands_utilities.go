@@ -11,12 +11,30 @@ var location struct {
 }
 
 type pokemonEncounters struct {
-	Pokemon Pokemon `json:"pokemon"`
+	Pokemon namedAPIResource `json:"pokemon"`
 }
 
 type Pokemon struct {
-	Name           string `json:"name"`
-	BaseExperience int    `json:"base_experience"`
+	Name           string  `json:"name"`
+	Height         int     `json:"height"`
+	Weight         int     `json:"weight"`
+	BaseExperience int     `json:"base_experience"`
+	Stats          []stats `json:"stats"`
+	Types          []types `json:"types"`
+}
+
+type stats struct {
+	Stat     namedAPIResource `json:"stat"`
+	BaseStat int              `json:"base_stat"`
+}
+
+type types struct {
+	Type namedAPIResource `json:"type"`
+}
+
+type namedAPIResource struct {
+	Name string `json:"name"`
+	URL  string `json:"url"`
 }
 
 func commandExplore(conf *Config, parameters []string) error {
@@ -57,13 +75,25 @@ func commandCatch(conf *Config, parameters []string) error {
 	if err := json.Unmarshal(val, &pokemonInstance); err != nil {
 		return err
 	}
-	userChance := rand.Int()
-	caught := userChance >= pokemonInstance.BaseExperience
+	userChance := rand.Intn(pokemonInstance.BaseExperience)
+	caught := userChance <= 40
 	if caught {
 		fmt.Println(pokeName + " was caught!")
 		conf.Pokedex[pokeName] = pokemonInstance
 	} else {
-		fmt.Println(pokeName + " escaped!")
+		return fmt.Errorf(pokeName + " escaped!")
+	}
+	return nil
+}
+
+func commandInspect(conf *Config, parameters []string) error {
+	if len(parameters) < 1 {
+		return fmt.Errorf("expected no. of arguments: %d, found: %d", 2, len(parameters))
+	}
+	pokeName := parameters[1]
+	_, caught := conf.Pokedex[pokeName]
+	if !caught {
+		return fmt.Errorf("you have not caught that pokemon")
 	}
 	return nil
 }
