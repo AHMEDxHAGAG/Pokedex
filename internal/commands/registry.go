@@ -31,14 +31,19 @@ func GetRegistry() Registry {
 			Callback:    commandMapb,
 		},
 		"explore": {
-			Name:        "explore",
-			Description: "List all Pokemons located in area : explore <location area>",
+			Name:        "explore <location area>",
+			Description: "List all Pokemons located in area",
 			Callback:    commandExplore,
 		},
 		"catch": {
-			Name:        "catch",
-			Description: "Catch Pokemon and add it to the Pokedex : catch <pokemon name>",
+			Name:        "catch <pokemon name>",
+			Description: "Catch Pokemon and add it to the Pokedex",
 			Callback:    commandCatch,
+		},
+		"inspect": {
+			Name:        "inspect <pokemon name>",
+			Description: "inspect details about your catched pokemon",
+			Callback:    commandInspect,
 		},
 	}
 }

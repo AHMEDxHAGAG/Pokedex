@@ -81,7 +81,7 @@ func commandCatch(conf *Config, parameters []string) error {
 		fmt.Println(pokeName + " was caught!")
 		conf.Pokedex[pokeName] = pokemonInstance
 	} else {
-		return fmt.Errorf(pokeName + " escaped!")
+		fmt.Printf("%s escaped!\n", pokeName)
 	}
 	return nil
 }
@@ -91,9 +91,21 @@ func commandInspect(conf *Config, parameters []string) error {
 		return fmt.Errorf("expected no. of arguments: %d, found: %d", 2, len(parameters))
 	}
 	pokeName := parameters[1]
-	_, caught := conf.Pokedex[pokeName]
+	poke, caught := conf.Pokedex[pokeName]
 	if !caught {
-		return fmt.Errorf("you have not caught that pokemon")
+		fmt.Printf("you have not caught that pokemon\n")
+		return nil
+	}
+	fmt.Printf("Name: %s\n", poke.Name)
+	fmt.Printf("Height: %d\n", poke.Height)
+	fmt.Printf("Weight: %d\n", poke.Weight)
+	fmt.Printf("Stats:\n")
+	for _, val := range poke.Stats {
+		fmt.Printf("\t-%s: %d\n", val.Stat.Name, val.BaseStat)
+	}
+	fmt.Printf("Types:\n")
+	for _, val := range poke.Types {
+		fmt.Printf("\t- %s\n", val.Type.Name)
 	}
 	return nil
 }
