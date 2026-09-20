@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/AHMEDxHAGAG/Pokedex/internal/pokemonapi"
+	"github.com/AHMEDxHAGAG/Pokedex/internal/pokeapi"
 )
 
 func commandExplore(conf *Config, parameters []string) error {
@@ -20,11 +20,11 @@ func commandExplore(conf *Config, parameters []string) error {
 	if err != nil {
 		return err
 	}
-	if err := json.Unmarshal(val, &pokemonapi.Location); err != nil {
+	if err := json.Unmarshal(val, &pokeapi.Location); err != nil {
 		return err
 	}
 	fmt.Println("Found Pokemon:")
-	for _, ecounters := range pokemonapi.Location.PokemonEncounters {
+	for _, ecounters := range pokeapi.Location.PokemonEncounters {
 		fmt.Printf("- %s\n", ecounters.Pokemon.Name)
 	}
 	return nil
@@ -42,7 +42,7 @@ func commandCatch(conf *Config, parameters []string) error {
 	if err != nil {
 		return err
 	}
-	var pokemonInstance pokemonapi.Pokemon
+	var pokemonInstance pokeapi.Pokemon
 	if err := json.Unmarshal(val, &pokemonInstance); err != nil {
 		return err
 	}

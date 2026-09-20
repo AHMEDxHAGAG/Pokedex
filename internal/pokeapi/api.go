@@ -1,4 +1,4 @@
-package pokemonapi
+package pokeapi
 
 var Location struct {
 	PokemonEncounters []pokemonEncounters `json:"pokemon_encounters"`

@@ -5,7 +5,7 @@ import (
 	"encoding/json/v2"
 	"fmt"
 
-	"github.com/AHMEDxHAGAG/Pokedex/internal/pokemonapi"
+	"github.com/AHMEDxHAGAG/Pokedex/internal/pokeapi"
 )
 
 func commandMap(conf *Config, parameters []string) error {
@@ -19,13 +19,13 @@ func commandMap(conf *Config, parameters []string) error {
 		return err
 	}
 
-	if err := json.Unmarshal(val, &pokemonapi.LocationArea); err != nil {
+	if err := json.Unmarshal(val, &pokeapi.LocationArea); err != nil {
 		return err
 	}
 
-	conf.PrevMap = pokemonapi.LocationArea.Prev
-	conf.NextMap = pokemonapi.LocationArea.Next
-	results := pokemonapi.LocationArea.Results
+	conf.PrevMap = pokeapi.LocationArea.Prev
+	conf.NextMap = pokeapi.LocationArea.Next
+	results := pokeapi.LocationArea.Results
 
 	for _, val := range results {
 		fmt.Println(val.Name)
@@ -44,13 +44,13 @@ func commandMapb(conf *Config, parameters []string) error {
 		return err
 	}
 
-	if err := json.Unmarshal(val, &pokemonapi.LocationArea); err != nil {
+	if err := json.Unmarshal(val, &pokeapi.LocationArea); err != nil {
 		return err
 	}
 
-	conf.PrevMap = pokemonapi.LocationArea.Prev
-	conf.NextMap = pokemonapi.LocationArea.Next
-	results := pokemonapi.LocationArea.Results
+	conf.PrevMap = pokeapi.LocationArea.Prev
+	conf.NextMap = pokeapi.LocationArea.Next
+	results := pokeapi.LocationArea.Results
 	for _, val := range results {
 		fmt.Println(val.Name)
 	}
