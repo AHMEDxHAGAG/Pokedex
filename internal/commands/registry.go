@@ -42,8 +42,13 @@ func GetRegistry() Registry {
 		},
 		"inspect": {
 			Name:        "inspect <pokemon name>",
-			Description: "inspect details about your catched pokemon",
+			Description: "Inspect details about your catched pokemon",
 			Callback:    commandInspect,
+		},
+		"pokedex": {
+			Name:        "pokedex",
+			Description: "List all your catched pokemon",
+			Callback:    commandPokedex,
 		},
 	}
 }
