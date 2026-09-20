@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/AHMEDxHAGAG/Pokedex/internal/pokecache"
+	"github.com/AHMEDxHAGAG/Pokedex/internal/pokemonapi"
 )
 
 type Config struct {
@@ -11,7 +12,7 @@ type Config struct {
 	NextMap string
 	PrevMap string
 	Cache   *pokecache.Cache
-	Pokedex map[string]Pokemon
+	Pokedex map[string]pokemonapi.Pokemon
 }
 
 func NewConfig() *Config {
@@ -20,6 +21,6 @@ func NewConfig() *Config {
 		NextMap: "https://pokeapi.co/api/v2/location-area/?offset=0&limit=20",
 		PrevMap: "",
 		Cache:   pokecache.NewCache(10 * time.Minute),
-		Pokedex: map[string]Pokemon{},
+		Pokedex: map[string]pokemonapi.Pokemon{},
 	}
 }

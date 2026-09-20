@@ -4,38 +4,9 @@ import (
 	"encoding/json/v2"
 	"fmt"
 	"math/rand"
+
+	"github.com/AHMEDxHAGAG/Pokedex/internal/pokemonapi"
 )
-
-var location struct {
-	PokemonEncounters []pokemonEncounters `json:"pokemon_encounters"`
-}
-
-type pokemonEncounters struct {
-	Pokemon namedAPIResource `json:"pokemon"`
-}
-
-type Pokemon struct {
-	Name           string  `json:"name"`
-	Height         int     `json:"height"`
-	Weight         int     `json:"weight"`
-	BaseExperience int     `json:"base_experience"`
-	Stats          []stats `json:"stats"`
-	Types          []types `json:"types"`
-}
-
-type stats struct {
-	Stat     namedAPIResource `json:"stat"`
-	BaseStat int              `json:"base_stat"`
-}
-
-type types struct {
-	Type namedAPIResource `json:"type"`
-}
-
-type namedAPIResource struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
-}
 
 func commandExplore(conf *Config, parameters []string) error {
 	if len(parameters) < 1 {
@@ -49,11 +20,11 @@ func commandExplore(conf *Config, parameters []string) error {
 	if err != nil {
 		return err
 	}
-	if err := json.Unmarshal(val, &location); err != nil {
+	if err := json.Unmarshal(val, &pokemonapi.Location); err != nil {
 		return err
 	}
 	fmt.Println("Found Pokemon:")
-	for _, ecounters := range location.PokemonEncounters {
+	for _, ecounters := range pokemonapi.Location.PokemonEncounters {
 		fmt.Printf("- %s\n", ecounters.Pokemon.Name)
 	}
 	return nil
@@ -71,7 +42,7 @@ func commandCatch(conf *Config, parameters []string) error {
 	if err != nil {
 		return err
 	}
-	var pokemonInstance Pokemon
+	var pokemonInstance pokemonapi.Pokemon
 	if err := json.Unmarshal(val, &pokemonInstance); err != nil {
 		return err
 	}

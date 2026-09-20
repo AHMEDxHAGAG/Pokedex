@@ -4,18 +4,9 @@ package commands
 import (
 	"encoding/json/v2"
 	"fmt"
+
+	"github.com/AHMEDxHAGAG/Pokedex/internal/pokemonapi"
 )
-
-type result struct {
-	Name string `json:"name"`
-	URL  string `json:"url"`
-}
-
-var locationArea struct {
-	Next    string   `json:"next"`
-	Prev    string   `json:"previous"`
-	Results []result `json:"results"`
-}
 
 func commandMap(conf *Config, parameters []string) error {
 	if conf.NextMap == "" {
@@ -28,13 +19,13 @@ func commandMap(conf *Config, parameters []string) error {
 		return err
 	}
 
-	if err := json.Unmarshal(val, &locationArea); err != nil {
+	if err := json.Unmarshal(val, &pokemonapi.LocationArea); err != nil {
 		return err
 	}
 
-	conf.PrevMap = locationArea.Prev
-	conf.NextMap = locationArea.Next
-	results := locationArea.Results
+	conf.PrevMap = pokemonapi.LocationArea.Prev
+	conf.NextMap = pokemonapi.LocationArea.Next
+	results := pokemonapi.LocationArea.Results
 
 	for _, val := range results {
 		fmt.Println(val.Name)
@@ -53,13 +44,13 @@ func commandMapb(conf *Config, parameters []string) error {
 		return err
 	}
 
-	if err := json.Unmarshal(val, &locationArea); err != nil {
+	if err := json.Unmarshal(val, &pokemonapi.LocationArea); err != nil {
 		return err
 	}
 
-	conf.PrevMap = locationArea.Prev
-	conf.NextMap = locationArea.Next
-	results := locationArea.Results
+	conf.PrevMap = pokemonapi.LocationArea.Prev
+	conf.NextMap = pokemonapi.LocationArea.Next
+	results := pokemonapi.LocationArea.Results
 	for _, val := range results {
 		fmt.Println(val.Name)
 	}
