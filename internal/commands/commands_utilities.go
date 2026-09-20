@@ -16,7 +16,7 @@ func commandExplore(conf *Config, parameters []string) error {
 	fmt.Println("Exploring " + locationArea)
 	url := "https://pokeapi.co/api/v2/location-area/"
 	api := url + locationArea
-	val, err := GetObject(api, conf)
+	val, err := pokeapi.GetObject(api, conf.Cache)
 	if err != nil {
 		return err
 	}
@@ -38,7 +38,7 @@ func commandCatch(conf *Config, parameters []string) error {
 	fmt.Println("Throwing a Pokeball at " + pokeName + "...")
 	url := "https://pokeapi.co/api/v2/pokemon/"
 	api := url + pokeName
-	val, err := GetObject(api, conf)
+	val, err := pokeapi.GetObject(api, conf.Cache)
 	if err != nil {
 		return err
 	}

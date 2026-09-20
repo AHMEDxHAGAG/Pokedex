@@ -1,12 +1,14 @@
-package commands
+package pokeapi
 
 import (
 	"io"
 	"net/http"
+
+	"github.com/AHMEDxHAGAG/Pokedex/internal/pokecache"
 )
 
-func GetObject(key string, conf *Config) ([]byte, error) {
-	val, found := conf.Cache.Get(key)
+func GetObject(key string, cache *pokecache.Cache) ([]byte, error) {
+	val, found := cache.Get(key)
 	if !found {
 		req, err := http.Get(key)
 		if err != nil {
@@ -17,7 +19,7 @@ func GetObject(key string, conf *Config) ([]byte, error) {
 		if err != nil {
 			return nil, err
 		}
-		conf.Cache.Add(key, val)
+		cache.Add(key, val)
 	}
 	return val, nil
 }

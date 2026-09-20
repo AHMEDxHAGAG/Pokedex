@@ -14,7 +14,7 @@ func commandMap(conf *Config, parameters []string) error {
 		return nil
 	}
 
-	val, err := GetObject(conf.NextMap, conf)
+	val, err := pokeapi.GetObject(conf.NextMap, conf.Cache)
 	if err != nil {
 		return err
 	}
@@ -39,7 +39,7 @@ func commandMapb(conf *Config, parameters []string) error {
 		return nil
 	}
 
-	val, err := GetObject(conf.PrevMap, conf)
+	val, err := pokeapi.GetObject(conf.PrevMap, conf.Cache)
 	if err != nil {
 		return err
 	}
